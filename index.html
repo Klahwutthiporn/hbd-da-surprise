@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Da 💜 19.11.2005</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Mali:wght@400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- Cosmic Starfield & Shooting Stars Canvas -->
+  <canvas id="starfield-canvas" aria-hidden="true"></canvas>
+
+  <!-- Subtle Scorpio Constellation Watermark -->
+  <div class="constellation-bg" aria-hidden="true">
+    <svg viewBox="0 0 400 320" class="scorpio-svg">
+      <g class="scorpio-lines" stroke="rgba(216, 180, 254, 0.25)" stroke-width="1.4" fill="none" stroke-dasharray="4 4">
+        <polyline points="70,70 95,110 105,155 135,140 175,150 215,175 245,215 265,255 305,270 335,250 325,220" />
+        <line x1="95" y1="110" x2="55" y2="115" />
+        <line x1="105" y1="155" x2="68" y2="185" />
+      </g>
+      <g class="scorpio-stars" fill="#ffffff">
+        <circle cx="70" cy="70" r="3" />
+        <circle cx="95" cy="110" r="3.5" />
+        <circle cx="55" cy="115" r="2.5" />
+        <circle cx="105" cy="155" r="3.2" />
+        <circle cx="68" cy="185" r="2.5" />
+        <circle cx="135" cy="140" r="3" />
+        <circle cx="175" cy="150" r="5" class="antares" />
+        <circle cx="215" cy="175" r="3" />
+        <circle cx="245" cy="215" r="3" />
+        <circle cx="265" cy="255" r="3.2" />
+        <circle cx="305" cy="270" r="3.5" />
+        <circle cx="335" cy="250" r="3" />
+        <circle cx="325" cy="220" r="3.5" />
+      </g>
+    </svg>
+  </div>
+
+  <!-- Floating Cute Sparkles Layer -->
+  <div id="floating-elements" aria-hidden="true"></div>
+
+  <!-- Top Navigation / Progress & Music Pill (Visible after unlock) -->
+  <header id="top-bar" class="top-bar hidden">
+    <div class="brand-badge">
+      <span class="zodiac-glyph">♏</span>
+      <span class="brand-text">Da's 21st Starry Day</span>
+    </div>
+
+    <nav class="stage-nav" aria-label="ขั้นตอนเซอร์ไพรส์">
+      <button class="nav-pill" data-target="stage-greeting" title="คำอวยพร">💌</button>
+      <button class="nav-pill" data-target="stage-memory" title="เกมจับคู่ภาพ">🃏</button>
+      <button class="nav-pill" data-target="stage-puzzle" title="เกมต่อภาพ">🧩</button>
+      <button class="nav-pill" data-target="stage-gift" title="กล่องของขวัญ">🎁</button>
+      <button class="nav-pill" data-target="stage-finale" title="คำอวยพรจากเจ้าเหมี่ยว">🐾</button>
+    </nav>
+
+    <button id="music-toggle-btn" class="music-pill" type="button" aria-label="เปิด/ปิดเพลงพื้นหลัง">
+      <span class="music-icon">🎵</span>
+      <span class="music-label">Happy Birthday</span>
+    </button>
+  </header>
+
+  <!-- Floating Wish Toast -->
+  <div id="wish-toast" class="wish-toast hidden" role="status" aria-live="polite">
+    <span class="wish-toast-icon">✨</span>
+    <span id="wish-toast-text">สุขสันต์วันเกิดนะตัว!</span>
+  </div>
+
+  <!-- Main App Container -->
+  <main id="app-container">
+    <!-- ==================== STAGE 1: PIN LOCK ==================== -->
+    <section id="stage-pin" class="stage active">
+      <div class="glass-card pin-card">
+        <div class="zodiac-pill">
+          <span>♏ ราศีพิจิก • 19 พฤศจิกายน 2005</span>
+        </div>
+        <h1 class="pin-title">ความลับใต้แสงดาว ✨</h1>
+        <p class="pin-subtitle">ใส่รหัส PIN 6 หลัก (วันเกิดคนพิเศษ ววดดปป)</p>
+
+        <div class="pin-dots" id="pin-dots" aria-label="ช่องใส่รหัส 6 หลัก">
+          <span class="pin-dot"></span>
+          <span class="pin-dot"></span>
+          <span class="pin-dot"></span>
+          <span class="pin-dot"></span>
+          <span class="pin-dot"></span>
+          <span class="pin-dot"></span>
+        </div>
+
+        <p id="pin-feedback" class="pin-feedback" aria-live="polite"></p>
+
+        <div class="keypad" role="group" aria-label="แป้นตัวเลข">
+          <button class="key-btn" data-key="1" type="button">1</button>
+          <button class="key-btn" data-key="2" type="button">2</button>
+          <button class="key-btn" data-key="3" type="button">3</button>
+          <button class="key-btn" data-key="4" type="button">4</button>
+          <button class="key-btn" data-key="5" type="button">5</button>
+          <button class="key-btn" data-key="6" type="button">6</button>
+          <button class="key-btn" data-key="7" type="button">7</button>
+          <button class="key-btn" data-key="8" type="button">8</button>
+          <button class="key-btn" data-key="9" type="button">9</button>
+          <button class="key-btn key-action" data-key="clear" type="button">ล้าง</button>
+          <button class="key-btn" data-key="0" type="button">0</button>
+          <button class="key-btn key-action" data-key="back" type="button">⌫</button>
+        </div>
+
+        <p class="pin-hint">คำใบ้: วันที่เกิดของตัว (19 / 11 / 48) 💜</p>
+      </div>
+    </section>
+
+    <!-- ==================== STAGE 2: POP-UP GREETING ==================== -->
+    <section id="stage-greeting" class="stage">
+      <div class="glass-card greeting-card pop-in">
+        <div class="floating-crown">👑✨</div>
+        <div class="zodiac-pill">
+          <span>♏ Scorpio Star • 19.11.2005</span>
+        </div>
+        <h1 class="greeting-heading">Happy Birthday นะที่รัก… 💜</h1>
+        <div class="greeting-message">
+          <p>
+            สุขสันต์วันเกิดนะ<strong>ตัว</strong>คนเก่งของเค้า ✨
+            วันนี้เมื่อปี 2005 ดวงดาวราศีพิจิกส่องแสงสว่างที่สุดเพื่อส่งตัวลงมาบนโลกใบนี้
+            และวันนี้ตัวก็ยังเป็นดวงดาวที่สว่างที่สุดและน่ารักที่สุดในชีวิตเค้าเสมอเลยนะ
+          </p>
+          <p>
+            เค้ารักตัวนะครับ ขอให้ปีนี้ของตัวมีแต่ความสุข รอยยิ้ม เสียงหัวเราะ สุขภาพแข็งแรง
+            และสมหวังในทุกๆ เรื่องที่ตั้งใจไว้ เค้าจะคอยกอดและเป็นกำลังใจให้ตัวแบบนี้ตลอดไปเลยนะ
+            รักตัวมากๆ ที่สุดในจักรวาลเลย 🌙🤍💜
+          </p>
+        </div>
+
+        <div class="game-choice-box">
+          <p class="choice-prompt">มาเล่นเกมเก็บคำอวยพรกันก่อนไปเปิดกล่องของขวัญนะ! 🎮✨</p>
+          <div class="btn-group">
+            <button id="btn-go-memory" class="btn-primary" type="button">
+              🃏 เล่นเกมจับคู่ภาพ
+            </button>
+            <button id="btn-go-puzzle" class="btn-secondary" type="button">
+              🧩 เล่นเกมต่อภาพ
+            </button>
+          </div>
+          <button id="btn-skip-to-gift" class="btn-ghost" type="button">
+            แอบไปดูกล่องของขวัญเลย 🎁
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== STAGE 3: MEMORY MATCHING GAME ==================== -->
+    <section id="stage-memory" class="stage">
+      <div class="glass-card game-card">
+        <div class="game-header">
+          <div>
+            <span class="stage-tag">ด่านที่ 1 • Memory Stars</span>
+            <h2 class="game-title">เกมจับคู่ภาพความทรงจำ 🃏✨</h2>
+          </div>
+          <div class="game-stats">
+            <span class="stat-pill">จับคู่ได้: <strong id="memory-matches">0</strong>/<span id="memory-total">6</span></span>
+            <span class="stat-pill">เปิดไป: <strong id="memory-moves">0</strong> ครั้ง</span>
+          </div>
+        </div>
+
+        <div class="game-controls-bar">
+          <div class="control-group">
+            <button class="chip-btn active" data-pairs="6" type="button">โหมดน่ารัก (6 คู่)</button>
+            <button class="chip-btn" data-pairs="8" type="button">โหมดจุใจ (8 คู่)</button>
+          </div>
+          <div class="control-group">
+            <button id="btn-memory-shuffle" class="chip-btn" type="button">🔄 สุ่มภาพใหม่จากอัลบั้ม</button>
+            <label class="chip-btn file-label" title="เลือกรูปจากโฟลเดอร์ในเครื่องเพิ่มเติม">
+              📁 เลือกจากโฟลเดอร์
+              <input id="memory-folder-input" type="file" accept="image/*" multiple hidden />
+            </label>
+          </div>
+        </div>
+
+        <div id="memory-wish-banner" class="in-game-wish">
+          💜 เปิดการ์ดจับคู่ภาพของเรา เพื่อรับข้อความอวยพรพิเศษในทุกๆ คู่เลยนะ!
+        </div>
+
+        <div id="memory-grid" class="memory-grid cols-4"></div>
+
+        <div id="memory-complete-bar" class="complete-bar hidden">
+          <p class="complete-text">เก่งมากเลยคนเก่งของเค้า! 🎉 พร้อมไปเล่นเกมต่อภาพกันต่อมั้ย?</p>
+          <div class="btn-group">
+            <button id="btn-memory-next" class="btn-primary" type="button">ไปเกมต่อภาพกันต่อ 🧩✨</button>
+            <button id="btn-memory-replay" class="btn-secondary" type="button">เล่นอีกรอบ 🔄</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== STAGE 4: PHOTO PUZZLE GAME ==================== -->
+    <section id="stage-puzzle" class="stage">
+      <div class="glass-card game-card">
+        <div class="game-header">
+          <div>
+            <span class="stage-tag">ด่านที่ 2 • Starlight Puzzle</span>
+            <h2 class="game-title">เกมต่อภาพแห่งดวงดาว 🧩💜</h2>
+          </div>
+          <div class="game-stats">
+            <span class="stat-pill">ถูกตำแหน่ง: <strong id="puzzle-correct">0</strong>/9</span>
+            <span class="stat-pill">สลับไป: <strong id="puzzle-moves">0</strong> ครั้ง</span>
+          </div>
+        </div>
+
+        <div class="game-controls-bar">
+          <div class="control-group">
+            <button id="btn-puzzle-new" class="chip-btn" type="button">🔄 สุ่มภาพใหม่</button>
+            <button id="btn-puzzle-preview" class="chip-btn" type="button">👁️ ดูภาพต้นฉบับ</button>
+          </div>
+          <label class="chip-btn file-label">
+            📁 เลือกรูปเองจากโฟลเดอร์
+            <input id="puzzle-file-input" type="file" accept="image/*" hidden />
+          </label>
+        </div>
+
+        <div id="puzzle-wish-banner" class="in-game-wish">
+          ✨ แตะชิ้นส่วน 2 ชิ้นเพื่อสลับตำแหน่งกัน ต่อให้ครบ 9 ช่องนะที่รัก!
+        </div>
+
+        <div class="puzzle-layout">
+          <div id="puzzle-board" class="puzzle-board" aria-label="กระดานเกมต่อภาพ 3x3"></div>
+          <div id="puzzle-reference-box" class="puzzle-reference">
+            <p class="ref-label">ภาพต้นฉบับ</p>
+            <img id="puzzle-ref-img" src="" alt="ภาพต้นฉบับสำหรับต่อภาพ" />
+          </div>
+        </div>
+
+        <div id="puzzle-complete-bar" class="complete-bar hidden">
+          <p class="complete-text">เย้! ต่อภาพสำเร็จแล้ว 🥳 ถึงเวลาเปิดกล่องของขวัญสุดพิเศษแล้วนะ!</p>
+          <div class="btn-group">
+            <button id="btn-puzzle-next" class="btn-primary" type="button">เปิดกล่องของขวัญ 🎁💜</button>
+            <button id="btn-puzzle-replay" class="btn-secondary" type="button">ต่อภาพอื่นอีก 🧩</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== STAGE 5: GIFT BOX & PURPEECH SONG ==================== -->
+    <section id="stage-gift" class="stage">
+      <div class="glass-card gift-stage-card">
+        <span class="stage-tag">Special Surprise • 19.11.2005</span>
+        <h2 class="game-title">กล่องของขวัญสำหรับตัว 🎁✨</h2>
+        <p id="gift-instruction" class="gift-subtitle">แตะที่กล่องของขวัญด้านล่างเพื่อเปิดรับความเซอร์ไพรส์นะที่รัก</p>
+
+        <!-- Interactive 3D-style Gift Box -->
+        <div id="gift-box-wrapper" class="gift-box-wrapper" role="button" tabindex="0" aria-label="เปิดกล่องของขวัญ">
+          <div class="gift-glow"></div>
+          <div class="gift-box" id="gift-box">
+            <div class="gift-lid">
+              <div class="gift-bow">
+                <span class="bow-left"></span>
+                <span class="bow-right"></span>
+                <span class="bow-center"></span>
+              </div>
+              <div class="gift-ribbon-h"></div>
+            </div>
+            <div class="gift-body">
+              <div class="gift-ribbon-v"></div>
+              <div class="gift-tag">For You 💜</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Revealed Gift Content with 10 Photo Balloons -->
+        <div id="gift-reveal" class="gift-reveal hidden">
+          <div class="balloons-message-stage">
+            <div id="gift-balloons-top" class="balloon-row"></div>
+
+            <div class="gift-letter-wrap">
+              <div id="gift-balloons-left" class="balloon-side"></div>
+
+              <div class="gift-letter">
+                <h3>ถึง ตัว คนดีของเค้า 💌</h3>
+                <p>
+                  "เค้ารักตัวนะครับ ขอให้ตัวมีความสุขมากๆ ในวันเกิดปีนี้และตลอดไปเลยนะ
+                  ไม่ว่าวันข้างหน้าจะมีเรื่องอะไรเกิดขึ้น ขอให้ตัวรู้ไว้นะว่าความรักของเค้าอยู่ข้างๆ ตัวตรงนี้เสมอ
+                  ไม่ได้ไปไหนไกลเลย เหมือนเพลงนี้ที่อยากมอบให้ตัวในวันเกิดปีนี้นะ…
+                  ขอให้ทุกๆ วันของตัวเต็มไปด้วยความอบอุ่น รอยยิ้ม และความรักที่รออยู่ไม่ไกลตรงนี้เลย 💜"
+                </p>
+              </div>
+
+              <div id="gift-balloons-right" class="balloon-side"></div>
+            </div>
+
+            <div id="gift-balloons-bottom" class="balloon-row"></div>
+          </div>
+
+          <div class="music-player-card">
+            <div class="vinyl-header">
+              <div class="vinyl-disc spinning">
+                <div class="vinyl-center">💜</div>
+              </div>
+              <div class="song-meta">
+                <span class="now-playing-badge">🎶 เริ่มที่ท่อนฮุกเพลงพิเศษ</span>
+                <h4>รักรออยู่ไม่ไกล (wind)</h4>
+                <p>PURPEECH</p>
+              </div>
+            </div>
+
+            <div class="youtube-embed-wrap" id="youtube-embed-wrap">
+              <!-- YouTube iframe injected on gift open -->
+            </div>
+
+            <div class="music-fallback-row">
+              <a
+                href="https://www.youtube.com/watch?v=uRXC213cMPg&t=70s"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="chip-btn"
+              >
+                🎧 เปิดฟังท่อนฮุกบน YouTube
+              </a>
+            </div>
+          </div>
+
+          <button id="btn-go-finale" class="btn-primary pulse-btn" type="button">
+            ไปรับคำอวยพรจากเจ้าเหมี่ยวทั้งสามของแม่กัน 🐾✨
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== STAGE 6: FINALE - THREE REAL KITTIES & WISHES ==================== -->
+    <section id="stage-finale" class="stage">
+      <div class="glass-card finale-card">
+        <div class="finale-header">
+          <div class="zodiac-pill">
+            <span>♏ 19 November 2005 • Happy 21st Birthday แม่ดา 💜</span>
+          </div>
+          <h2 class="finale-title">คำอวยพรจากเจ้าเหมี่ยวทั้งสามของแม่ 🐾✨</h2>
+          <p class="finale-subtitle">
+            โอเลี้ยง ชาไทย และช๊อกโกแลต มารวมตัวกันอวยพรวันเกิดให้แม่แล้วงับ! ลองแตะที่เด็กๆ ดูสิ 💜
+          </p>
+        </div>
+
+        <!-- Three Real Kitties Stage -->
+        <div class="kitties-stage">
+          <!-- Kitty 1: โอเลี้ยง (สีดำ) -->
+          <div class="kitty-actor" data-kitty="1" role="button" tabindex="0" aria-label="โอเลี้ยง">
+            <div class="kitty-bubble" id="kitty-bubble-1">เมี๊ยว~ สุขสันต์วันเกิดนะครับแม่! โอเลี้ยงรักแม่ที่สุดเลย 🎂🖤</div>
+            <div class="kitty-photo-frame kitty-bounce-1">
+              <span class="kitty-hat">🎉</span>
+              <img src="assets/photos/photo_18.jpg?v=3" alt="โอเลี้ยง แมวสีดำ" />
+            </div>
+            <span class="kitty-name">โอเลี้ยง 🖤</span>
+            <span class="kitty-breed">เจ้าเหมียวสีดำขี้อ้อน</span>
+          </div>
+
+          <!-- Kitty 2: ชาไทย (สีส้ม) -->
+          <div class="kitty-actor" data-kitty="2" role="button" tabindex="0" aria-label="ชาไทย">
+            <div class="kitty-bubble" id="kitty-bubble-2">แง้ว~ ขอให้แม่มีความสุขมากๆ สมหวังทุกอย่างเลยนะงับ! 🧡✨</div>
+            <div class="kitty-photo-frame kitty-bounce-2">
+              <span class="kitty-hat">👑</span>
+              <img src="assets/photos/photo_17.jpg?v=3" alt="ชาไทย แมวสีส้ม" />
+            </div>
+            <span class="kitty-name">ชาไทย 🧡</span>
+            <span class="kitty-breed">เจ้าส้มตัวป่วนของแม่</span>
+          </div>
+
+          <!-- Kitty 3: ช๊อกโกแลต (สีสลิด) -->
+          <div class="kitty-actor" data-kitty="3" role="button" tabindex="0" aria-label="ช๊อกโกแลต">
+            <div class="kitty-bubble" id="kitty-bubble-3">ม้าว~ ขอให้แม่สุขภาพแข็งแรง ยิ้มเยอะๆ อยู่กับพวกหนูไปนานๆ นะ! 🤎🐾</div>
+            <div class="kitty-photo-frame kitty-bounce-3">
+              <span class="kitty-hat">🌟</span>
+              <img src="assets/photos/photo_21.jpg?v=3" alt="ช๊อกโกแลต แมวสีสลิด" />
+            </div>
+            <span class="kitty-name">ช๊อกโกแลต 🤎</span>
+            <span class="kitty-breed">เจ้าสลิดสุดน่ารัก</span>
+          </div>
+        </div>
+
+        <div class="kitty-parade-controls">
+          <button id="btn-kitty-cheer" class="btn-primary" type="button">
+            🐾 เรียกโอเลี้ยง ชาไทย ช๊อกโกแลต มาอวยพรแม่พร้อมกัน! 🎉
+          </button>
+        </div>
+
+        <!-- Birthday Wishes Cards from the Three Kitties -->
+        <div class="kitty-wishes-section">
+          <div class="kitty-wish-card">
+            <div class="wish-card-head">
+              <img src="assets/photos/photo_18.jpg?v=3" alt="โอเลี้ยง" class="wish-avatar" />
+              <div>
+                <h4>คำอวยพรจาก "โอเลี้ยง" 🖤</h4>
+                <span>ถึง แม่คนเก่งของโอเลี้ยง</span>
+              </div>
+            </div>
+            <p>
+              "เมี๊ยว~ สุขสันต์วันเกิดนะครับแม่ ขอบคุณแม่ที่คอยดูแล กอด และให้ขนมอร่อยๆ กับโอเลี้ยงเสมอนะ
+              ขอให้แม่มีแต่รอยยิ้ม ไม่เหนื่อย ไม่เครียด แล้วก็รักโอเลี้ยงกับปะป๊าไปนานๆ เลยนะครับ 🖤💜"
+            </p>
+          </div>
+
+          <div class="kitty-wish-card">
+            <div class="wish-card-head">
+              <img src="assets/photos/photo_17.jpg?v=3" alt="ชาไทย" class="wish-avatar" />
+              <div>
+                <h4>คำอวยพรจาก "ชาไทย" 🧡</h4>
+                <span>ถึง แม่คนสวยของชาไทย</span>
+              </div>
+            </div>
+            <p>
+              "แง้วว~ วันเกิดปีนี้ขอให้แม่เฮงๆ ปังๆ สมหวังทุกสิ่งที่แม่ตั้งใจไว้เลยนะครับ
+              ถ้าวันไหนแม่เหนื่อย กลับมาให้ชาไทยอ้อนให้หายเหนื่อยได้เลยนะ รักแม่ที่สุดในโลกเลยงับ! 🧡✨"
+            </p>
+          </div>
+
+          <div class="kitty-wish-card">
+            <div class="wish-card-head">
+              <img src="assets/photos/photo_21.jpg?v=3" alt="ช๊อกโกแลต" class="wish-avatar" />
+              <div>
+                <h4>คำอวยพรจาก "ช๊อกโกแลต" 🤎</h4>
+                <span>ถึง แม่ผู้น่ารักของช๊อกโกแลต</span>
+              </div>
+            </div>
+            <p>
+              "ม้าว~ ขอให้แม่สุขภาพแข็งแรง นอนหลับฝันดีทุกคืน ตื่นมาสดใสเหมือนเดิมทุกวันเลยนะครับ
+              พวกหนูทั้งสามตัวกับเค้าจะคอยเป็นความสุขให้แม่ตรงนี้ตลอดไปเลยนะแม่ 🤎🐾💜"
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Scripts -->
+  <script src="js/photos-manifest.js?v=3"></script>
+  <script src="js/stars.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/games.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
