@@ -1491,3 +1491,121 @@ body {
     height: 78px;
   }
 }
+
+/* ==================== MOBILE TYPOGRAPHY & LAYOUT POLISH ==================== */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.greeting-message,
+.gift-letter,
+.kitty-wish-card p,
+.kitty-bubble,
+.in-game-wish,
+.wish-toast {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+@media (max-width: 640px) {
+  #app-container {
+    align-items: flex-start;
+    padding: 16px 12px 40px;
+  }
+
+  .top-bar {
+    padding: 8px 10px;
+    gap: 6px;
+  }
+
+  .stage-nav {
+    gap: 4px;
+  }
+
+  .nav-pill {
+    width: 31px;
+    height: 31px;
+    font-size: 0.88rem;
+  }
+
+  .music-pill {
+    padding: 6px 10px;
+    font-size: 0.74rem;
+    white-space: nowrap;
+  }
+
+  .wish-toast {
+    top: 62px;
+    width: min(92vw, 380px);
+    border-radius: 18px;
+    padding: 10px 14px;
+    font-size: 0.86rem;
+    line-height: 1.45;
+  }
+
+  .greeting-heading {
+    font-size: 1.55rem;
+    line-height: 1.35;
+  }
+
+  .greeting-message {
+    padding: 16px 14px;
+    font-size: 0.94rem;
+    line-height: 1.75;
+    text-align: left;
+  }
+
+  .gift-letter {
+    padding: 16px 14px;
+    font-size: 0.94rem;
+    line-height: 1.75;
+    text-align: left;
+  }
+
+  .gift-letter h3 {
+    text-align: center;
+    font-size: 1.15rem;
+  }
+
+  .balloon-row {
+    gap: 10px;
+  }
+
+  .balloon-side {
+    gap: 12px;
+  }
+
+  .balloon-orb {
+    width: 64px;
+    height: 74px;
+  }
+
+  /* Stack the 3 kitties cleanly on mobile so speech bubbles never squish */
+  .kitties-stage {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .kitty-actor {
+    padding: 14px 14px 12px;
+  }
+
+  .kitty-bubble {
+    width: 100%;
+    min-height: auto;
+    font-size: 0.86rem;
+    line-height: 1.5;
+    padding: 8px 12px;
+  }
+
+  .kitty-photo-frame {
+    width: 118px;
+    height: 118px;
+  }
+
+  .kitty-wishes-section {
+    grid-template-columns: 1fr;
+  }
+}
