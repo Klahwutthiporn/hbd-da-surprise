@@ -74,8 +74,54 @@
 
   <!-- Main App Container -->
   <main id="app-container">
+    <!-- ==================== STAGE 0: COUNTDOWN LOCK ==================== -->
+    <section id="stage-countdown" class="stage active">
+      <div id="countdown-balloons" class="countdown-balloons-layer" aria-hidden="true"></div>
+
+      <div class="glass-card countdown-card pop-in">
+        <div class="countdown-cute-icons" aria-hidden="true">
+          <span class="bounce-icon d1">🎈</span>
+          <span class="bounce-icon d2">💜</span>
+          <span class="bounce-icon d3">🎂</span>
+          <span class="bounce-icon d4">🐾</span>
+        </div>
+
+        <div class="zodiac-pill">
+          <span>♏ 19 พฤศจิกายน • วันเกิดคนพิเศษ</span>
+        </div>
+
+        <h1 class="countdown-title">อดใจรอเมื่อถึงเวลา… ⏳✨</h1>
+        <p class="countdown-subtitle">
+          ความลับสุดพิเศษกำลังนับถอยหลังมาหาตัวแล้วนะ ขอให้อดใจรอก่อนน้า 💜
+        </p>
+
+        <div class="countdown-grid" aria-live="polite">
+          <div class="cd-box">
+            <span id="cd-days" class="cd-num">00</span>
+            <span class="cd-label">วัน</span>
+          </div>
+          <div class="cd-box">
+            <span id="cd-hours" class="cd-num">00</span>
+            <span class="cd-label">ชั่วโมง</span>
+          </div>
+          <div class="cd-box">
+            <span id="cd-minutes" class="cd-num">00</span>
+            <span class="cd-label">นาที</span>
+          </div>
+          <div class="cd-box">
+            <span id="cd-seconds" class="cd-num">00</span>
+            <span class="cd-label">วินาที</span>
+          </div>
+        </div>
+
+        <div class="waiting-badge">
+          🔒 ยังเปิดไม่ได้นะ รอให้ถึงเที่ยงคืนวันที่ 19 พ.ย. ก่อนนะตัว 🌙🤍
+        </div>
+      </div>
+    </section>
+
     <!-- ==================== STAGE 1: PIN LOCK ==================== -->
-    <section id="stage-pin" class="stage active">
+    <section id="stage-pin" class="stage">
       <div class="glass-card pin-card">
         <div class="zodiac-pill">
           <span>♏ ราศีพิจิก • 19 พฤศจิกายน 2005</span>

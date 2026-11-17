@@ -50,7 +50,18 @@
   };
 
   // ==================== STAGE NAVIGATION ====================
+  const TARGET_TIME = new Date("2026-11-19T00:00:00+07:00").getTime();
+  const IS_PREVIEW = new URLSearchParams(window.location.search).get("preview") === "1";
+
+  function isTimeReached() {
+    return IS_PREVIEW || Date.now() >= TARGET_TIME;
+  }
+
   function goToStage(stageId) {
+    if (!isTimeReached() && stageId !== "stage-countdown") {
+      return;
+    }
+
     document.querySelectorAll(".stage").forEach((s) => s.classList.remove("active"));
     const target = document.getElementById(stageId);
     if (target) target.classList.add("active");
@@ -61,11 +72,79 @@
 
     if (stageId === "stage-gift" || stageId === "stage-finale") {
       window.BirthdayAudio.stopBackgroundMusic();
-    } else if (stageId !== "stage-pin") {
+    } else if (stageId !== "stage-pin" && stageId !== "stage-countdown") {
       window.BirthdayAudio.startBackgroundMusic();
     }
 
     window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  // ==================== COUNTDOWN & FLOATING BALLOONS ====================
+  function spawnCountdownBalloons() {
+    const layer = document.getElementById("countdown-balloons");
+    if (!layer) return;
+
+    const createDrifter = (src, leftPct, durationSec, delaySec) => {
+      const el = document.createElement("div");
+      el.className = "drift-balloon";
+      el.style.left = `${leftPct}%`;
+      el.style.animationDuration = `${durationSec}s`;
+      el.style.animationDelay = `${delaySec}s`;
+      el.innerHTML = `
+        <div class="balloon-orb">
+          <img src="${src}" alt="ความทรงจำ" />
+        </div>
+        <div class="balloon-knot"></div>
+        <div class="balloon-string"></div>
+      `;
+      layer.appendChild(el);
+    };
+
+    BALLOON_PHOTOS.forEach((src, i) => {
+      const leftPct = 4 + ((i * 11) % 86);
+      const duration = 11 + (i % 5) * 2.2;
+      const delay = i * 1.4;
+      createDrifter(src, leftPct, duration, delay);
+    });
+  }
+
+  function setupCountdown() {
+    if (isTimeReached()) {
+      goToStage("stage-pin");
+      return;
+    }
+
+    spawnCountdownBalloons();
+
+    const daysEl = document.getElementById("cd-days");
+    const hoursEl = document.getElementById("cd-hours");
+    const minsEl = document.getElementById("cd-minutes");
+    const secsEl = document.getElementById("cd-seconds");
+
+    const pad = (n) => String(Math.max(0, n)).padStart(2, "0");
+
+    const tick = () => {
+      const diff = TARGET_TIME - Date.now();
+      if (diff <= 0) {
+        clearInterval(cdTimer);
+        window.launchStarburst(36);
+        goToStage("stage-pin");
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const mins = Math.floor((diff / (1000 * 60)) % 60);
+      const secs = Math.floor((diff / 1000) % 60);
+
+      if (daysEl) daysEl.textContent = pad(days);
+      if (hoursEl) hoursEl.textContent = pad(hours);
+      if (minsEl) minsEl.textContent = pad(mins);
+      if (secsEl) secsEl.textContent = pad(secs);
+    };
+
+    tick();
+    const cdTimer = setInterval(tick, 1000);
   }
 
   // ==================== PIN LOGIC ====================
@@ -275,6 +354,7 @@
       }
     });
 
+    setupCountdown();
     window.BirthdayGames.init();
     setupKitties();
   }
